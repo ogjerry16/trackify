@@ -2,23 +2,23 @@ import { StyleSheet, Text } from 'react-native'
 import ThemedView from '../../components/ThemedView'
 import ThemedText from '../../components/ThemedText'
 import Spacer from '../../components/Spacer'
-import { useUser } from '../../hooks/useUser'
 import ThemedButton from '../../components/ThemedButton'
 
 const Products = () => {
-    const { logout, user } = useUser()
- 
+    function dummyLogout() {
+        console.log("Just a placeholder for the unimplemented logout")
+    }
 
   return (
     <ThemedView style={styles.container}>
         <ThemedText>
-            Users' email: {user?.email}
+            {/* Users' email: {user?.email} */}
         </ThemedText>
         <ThemedText title={true} style={styles.heading}>
             Products will be displayed here
         </ThemedText>
         <Spacer />
-       <ThemedButton onPress={logout}>
+       <ThemedButton onPress={dummyLogout}>
            <Text style={{ color: '#f2f2f2' }}>Logout</Text>
        </ThemedButton>
     </ThemedView>

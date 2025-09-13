@@ -10,7 +10,6 @@ import ThemedText from '../../components/ThemedText'
 import Spacer from '../../components/Spacer'
 import ThemedButton from '../../components/ThemedButton'
 import ThemedTextInput from '../../components/ThemedTextInput'
-import { useUser } from '../../hooks/useUser'
 import { Colors } from '../../constants/Color'
     
 
@@ -19,16 +18,16 @@ const Signup = () => {
   const [password, setPassword] = useState('')
   const [error, setError] = useState(null)
 
-  const { register } = useUser()
-
   const handleSubmit = async () => {
-    try {
-      await register(email, password)
-      console.log("The account has been created successfully")
-    } catch (error) {
-      console.log("Failed to create an account:", error)
-      setError(error.message)
-    }
+    // try {
+    //   await register(email, password)
+    //   console.log("The account has been created successfully")
+    // } catch (error) {
+    //   console.log("Failed to create an account:", error)
+    //   setError(error.message)
+    // }
+
+    console.log("Will be implemented later on with SupaBase.")
   }
 
   return (

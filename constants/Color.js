@@ -1,25 +1,24 @@
 export const Colors = {
-    primary: "#6849a7",
-    warning: "#cc475a",
-    
+    primary: "#A1C2BD",   // accent teal
+    warning: "#cc475a",   // unchanged for semantic contrast
+
     dark: {
-        text: '#d4d4d4',
-        title: '#fff',
-        background: '#252231',
-        navBackground: '#281e2b',
-        iconColor: '#9593a5',
-        iconColorFocused: '#fff',
-        uiBackground: '#2f2b3d',
+        text: '#A1C2BD',          // soft teal for readable text
+        title: '#E7F2EF',         // light mint for emphasis titles
+        background: '#19183B',    // deep navy background
+        navBackground: '#1F1E40', // slightly lighter than main bg
+        iconColor: '#708993',     // muted gray-blue for default icons
+        iconColorFocused: '#E7F2EF', // bright mint when active
+        uiBackground: '#25244A',  // mid-tone variation for cards/panels
     },
 
     light: {
-        text: '#625f72',
-        title: '#201e2b',
-        background: '#e0dfe8',
-        navBackground: '#e8e7ef',
-        iconColor: '#686477',
-        iconColorFocused: '#201e2b',
-        uiBackground: '#d6d5e1',
+        text: '#708993',          // muted gray-blue for body text
+        title: '#19183B',         // deep navy for headlines
+        background: '#E7F2EF',    // light mint background
+        navBackground: '#DCEAE7', // slightly darker variation
+        iconColor: '#A1C2BD',     // teal for inactive icons
+        iconColorFocused: '#19183B', // strong contrast focus
+        uiBackground: '#F4FBF9',  // very subtle off-white mint
     },
-
 }

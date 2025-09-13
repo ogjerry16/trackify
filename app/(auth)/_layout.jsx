@@ -10,14 +10,14 @@ const AuthLayout = () => {
 
     return (
 
-        <GuestOnly>
+        <>
             <StatusBar style="auto" />
             <Stack screenOptions={{ 
                 animation: 'none',
                 headerStyle: {backgroundColor: theme.navBackground},
                 headerTintColor: theme.title,
                 }}/>
-        </GuestOnly>
+        </>
     )
 
 }

@@ -10,20 +10,20 @@ const RootLayout = () => {
      const theme = Colors[colorScheme] ?? Colors.light
 
     return (
-        <UserProvider>
-            <StatusBar style="auto" />
+        <>
+        <StatusBar style="auto" />
 
-            <Stack screenOptions={{
-                headerStyle: {backgroundColor: theme.navBackground},
-                headerTintColor: theme.title,
-            }}> 
-                <Stack.Screen name='index' options={{title: 'MyHome'}} />
-                <Stack.Screen name='about' options={{title: 'About'}} />
-                <Stack.Screen name='content' />
-                <Stack.Screen name='(auth)' options={{headerShown: false}} />
-                <Stack.Screen name='(dashboard)' options={{headerShown: false}} />
-            </Stack>
-        </UserProvider>
+        <Stack screenOptions={{
+            headerStyle: {backgroundColor: theme.navBackground},
+            headerTintColor: theme.title,
+        }}> 
+            <Stack.Screen name='index' options={{title: 'MyHome'}} />
+            <Stack.Screen name='about' options={{title: 'About'}} />
+            <Stack.Screen name='content' />
+            <Stack.Screen name='(auth)' options={{headerShown: false}} />
+            <Stack.Screen name='(dashboard)' options={{headerShown: false}} />
+        </Stack>
+        </>
     )
 
 }

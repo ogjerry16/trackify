@@ -10,14 +10,11 @@ import ThemedText from '../../components/ThemedText'
 import Spacer from '../../components/Spacer'
 import ThemedButton from '../../components/ThemedButton'
 import ThemedTextInput from '../../components/ThemedTextInput'
-import { useUser } from '../../hooks/useUser'
 
 const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [error, setError] = useState(null)
 
-  const { login } = useUser()
 
   const colorScheme = useColorScheme()
 //   Hooks must be called:
@@ -25,14 +22,15 @@ const Login = () => {
 // Not inside loops, conditionals, or nested functions.
 
   const handleSubmit = async () => {
-    setError(null)
+    // setError(null)
 
-    try {
-      await login(email, password)
-      console.log("Login successful")
-    } catch (error) {
-      setError(error.message)
-    }
+    // try {
+    //   await login(email, password)
+    //   console.log("Login successful")
+    // } catch (error) {
+    //   setError(error.message)
+    // }
+    console.log("Will be implemented with SupaBase as the backend")
   }
 
   return (
@@ -62,7 +60,7 @@ const Login = () => {
       </ThemedButton>{/* Short-circuit evaluation: A && B means: if A is truthy -> return B. if A is falsy -> return A */}
 
       <Spacer />
-      {error && <Text style={styles.error}>{error}</Text>}
+      {/* {error && <Text style={styles.error}>{error}</Text>} */}
 
       <Spacer height={50} />
       <Link href="/signup">

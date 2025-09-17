@@ -9,7 +9,7 @@ const DashboardLayout = () => {
     const colorScheme = useColorScheme()
     const theme = Colors[colorScheme] ?? Colors.light
   return (
-    <>
+    <UserOnly>
     <Tabs 
         screenOptions={{
             headerShown: false,
@@ -45,7 +45,7 @@ const DashboardLayout = () => {
         color={focused ? theme.iconColorFocused : theme.iconColor} />) }} />
 
     </Tabs>
-    </>
+    </UserOnly>
   )
 }
 

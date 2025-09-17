@@ -1,55 +1,103 @@
-import { createContext, useState, useEffect } from 'react'
-import { account } from '../lib/appwrite'
-import { ID } from 'react-native-appwrite'
-
-
+import { createContext, useState, useEffect, useContext } from 'react'
+import { supabase } from '../lib/supabase'
 
 export const UserContext = createContext()
 
 export function UserProvider({ children }) {
     const [user, setUser] = useState(null)
+    const [session, setSession] = useState(null)
     const [authChecked, setAuthChecked] = useState(false)
 
     async function login(email, password) {
+        setAuthChecked(false)
         try {
-            await account.createEmailPasswordSession(email, password)
-            const response = await account.get()
-            setUser(response)
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email: email,
+                password: password,
+            })
+            if (error) throw error;
+            // REMOVED: setUser(data.user) - handled by auth listener
         } catch (error) {
-            throw Error(error.message)
-        }
-
-    }
-    async function register(email, password) {
-        try {
-            await account.create(ID.unique(), email, password)
-            await login(email, password)
-        } catch (error) {
-            throw Error(error.message)
-        }
-    }
-    async function logout() {
-        await account.deleteSession('current')
-        setUser(null)
-    }
-
-    async function getInitialUserValue() {
-        try {
-            const response = await account.get()
-            setUser(response)
-        } catch (error) {
-            setUser(null)
+            console.error('Login error: ', error.message);
+            throw error;
         } finally {
             setAuthChecked(true)
         }
     }
 
+    async function signup(email, password, name, phoneNo) {
+        setAuthChecked(false)
+        try {
+            const { data, error } = await supabase.auth.signUp({
+                email: email,
+                password: password,
+                options: {
+                    data: {
+                        ...(name && { first_name: name }),   
+                        ...(phoneNo && { phone_number: phoneNo }),
+                    }
+                }
+            })
+            if (error) throw error;
+            // REMOVED: setUser(data.user) - handled by auth listener
+        } catch (error) {
+            console.error('Signup error: ', error.message);
+            throw error;
+        } finally {
+            setAuthChecked(true)
+        }
+    }
+    
+    async function logout() {
+        try {
+            const { error } = await supabase.auth.signOut()
+            if (error) throw error;
+            // User will be automatically set to null by auth listener
+        } catch (error) {
+            console.error("Error trying to signout: ", error.message);
+            throw error
+        }
+    }
+
     useEffect(() => {
-        getInitialUserValue()
+        const getInitialSession = async () => {
+            try {
+                const { data: { session } } = await supabase.auth.getSession();
+                setSession(session);
+                setUser(session?.user ?? null);
+            } catch (error) {
+                console.error('Error getting session:', error);
+                setUser(null);
+            } finally {
+                setAuthChecked(true);
+            }
+        };
+
+        getInitialSession();
+
+        // Subscribe to auth state changes
+        const { data: { subscription } } = supabase.auth.onAuthStateChange(
+            (_event, session) => {
+                setSession(session);
+                setUser(session?.user ?? null);
+                setAuthChecked(true);
+            }   
+        );
+
+        // Cleanup
+        return () => subscription.unsubscribe();
     }, [])
 
+    // Added missing return statement
     return (
-        <UserContext.Provider value={{ user, login, register, logout, authChecked }}>
+        <UserContext.Provider value={{ 
+            user, 
+            session, 
+            login, 
+            signup, 
+            logout, 
+            authChecked 
+        }}>
             {children}
         </UserContext.Provider>
     )

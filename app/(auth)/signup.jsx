@@ -11,35 +11,54 @@ import Spacer from '../../components/Spacer'
 import ThemedButton from '../../components/ThemedButton'
 import ThemedTextInput from '../../components/ThemedTextInput'
 import { Colors } from '../../constants/Color'
+import { useUser } from '../../hooks/useUser'
     
 
 const Signup = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState(null)
+  const [name, setName] = useState('')
+  const [phoneNo, setPhoneNo] = useState('')
+
+  const { signup } = useUser()
 
   const handleSubmit = async () => {
-    // try {
-    //   await register(email, password)
-    //   console.log("The account has been created successfully")
-    // } catch (error) {
-    //   console.log("Failed to create an account:", error)
-    //   setError(error.message)
-    // }
-
-    console.log("Will be implemented later on with SupaBase.")
+    try {
+      await signup(email, password, name, phoneNo)
+      console.log("The account has been created successfully.")
+    } catch (error) {
+      console.log("Signup Failed:", error)
+      setError(error.message)
+    }
   }
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <ThemedView style={styles.container}>
         <ThemedText title={true} style={styles.title}>Create a new account</ThemedText>
+        
+        <ThemedTextInput
+          style={{ width: '80%', marginBottom: 20 }}
+          placeholder="Full Name *"
+          onChangeText={setName}
+          value={name}
+      />
+  
         <ThemedTextInput
           style={{ width: '80%', marginBottom: 20 }}
           placeholder="Email"
           keyboardType="email-address"
           onChangeText={setEmail}
           value={email}
+        />
+        
+        <ThemedTextInput
+          style={{ width: '80%', marginBottom: 20 }}
+          placeholder="Phone Number (Optional)"
+          keyboardType="phone-pad"
+          onChangeText={setPhoneNo}
+          value={phoneNo}
         />
 
         <ThemedTextInput

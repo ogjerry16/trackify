@@ -40,6 +40,13 @@ export function UserProvider({ children }) {
             })
             if (error) throw error;
             // REMOVED: setUser(data.user) - handled by auth listener
+            // if (data?.user) {
+            //     const user = data.user
+                
+            //     await supabase.from("employees").insert({
+            //         id: user.id,
+            //         phone: user.user_metadata.phone_number
+            // })}
         } catch (error) {
             console.error('Signup error: ', error.message);
             throw error;
